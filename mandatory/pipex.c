@@ -6,7 +6,7 @@
 /*   By: jobject <jobject@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 19:27:26 by jobject           #+#    #+#             */
-/*   Updated: 2021/11/12 19:28:41 by jobject          ###   ########.fr       */
+/*   Updated: 2021/11/15 14:45:08 by jobject          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,5 +60,5 @@ void	pipex(t_cmd	*cmds, t_proccess	*proc, char	**envp, char	**argv)
 		error_cmd("ERROR: Forking two failed", &cmds);
 	if (!proc->child2)
 		child_2(cmds, envp, argv[4], proc);
-	waitpid(proc->child1, NULL, 0);
+	waitpid(0, NULL, 0);
 }

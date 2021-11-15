@@ -6,7 +6,7 @@
 /*   By: jobject <jobject@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 19:45:16 by jobject           #+#    #+#             */
-/*   Updated: 2021/11/12 21:19:42 by jobject          ###   ########.fr       */
+/*   Updated: 2021/11/15 16:26:44 by jobject          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include "../libft/libft.h"
+# include "get_next_line.h"
 
 typedef struct s_cmd
 {
@@ -40,7 +41,8 @@ void	error_message(char	*message);
 void	error_cmd(char	*message, t_cmd	**cmds);
 void	init_env(char	**envp, t_cmd	*cmds);
 char	*double_join(char	*s1, char	*s2);
-void	init_cmd(char	**envp, char	*argv, t_cmd	*cmds);
-int		read_write(char	*filename, char	solution, t_cmd	*cmds);
+void	init_cmd(char	*argv, t_cmd	*cmds);
+int		read_write(char	*filename, char solution, t_cmd	*cmds);
+void	pipex(t_cmd	*cmds, char	**envp, t_proccess	*proc);
 
 #endif

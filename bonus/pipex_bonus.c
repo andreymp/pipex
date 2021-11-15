@@ -6,27 +6,39 @@
 /*   By: jobject <jobject@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 19:55:23 by jobject           #+#    #+#             */
-/*   Updated: 2021/11/12 20:56:37 by jobject          ###   ########.fr       */
+/*   Updated: 2021/11/15 15:42:52 by jobject          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h" 
 
-void	child(t_cmd	*cmds, char	**envp, char	*filename
-, t_proccess	*proc)
+static void	child(t_cmd	*cmds, char	**envp, t_proccess	**proc)
 {
-	int	fd;
-
-	fd = open(filename, O_RDONLY, 0777);
-	if (fd < 0)
-		error_cmd("ERROR: Unable to open 'infile'", &cmds);
-	if (dup2(fd, STDIN_FILENO) < 0)
-		error_cmd("ERROR: Unable to dup infile and STDIN", &cmds);
-	if (dup2(proc->fds[1], STDOUT_FILENO) < 0)
-		error_cmd("ERROR: Unable to dup fds[1] and STDOUT", &cmds);
-	close(proc->fds[0]);
+	if (dup2((*proc)->fds[1], STDOUT_FILENO) < 0)
+		error_cmd("ERROR: dup2 failed", &cmds);
+	close((*proc)->fds[0]);
+	close((*proc)->fds[1]);
 	execve(cmds->cmd_path, cmds->cmd, envp);
-	close(fd);
-	close(proc->fds[1]);
 	exit(EXIT_FAILURE);
+}
+
+static void	parents(t_cmd	*cmds, t_proccess	**proc)
+{
+	if (dup2((*proc)->fds[0], STDIN_FILENO) < 0)
+		error_cmd("ERROR: dup2 failed", &cmds);
+	close((*proc)->fds[1]);
+	close((*proc)->fds[0]);
+}
+
+void	pipex(t_cmd	*cmds, char	**envp, t_proccess	*proc)
+{
+	if (pipe(proc->fds) == -1)
+		error_cmd("ERROR: Piping failed", &cmds);
+	proc->parent = fork();
+	if (proc->parent < 0)
+		error_cmd("ERROR: Forking failed", &cmds);
+	if (!proc->parent)
+		child(cmds, envp, &proc);
+	else
+		parents(cmds, &proc);
 }

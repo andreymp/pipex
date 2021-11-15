@@ -6,7 +6,7 @@
 /*   By: jobject <jobject@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 19:46:12 by jobject           #+#    #+#             */
-/*   Updated: 2021/11/12 21:16:48 by jobject          ###   ########.fr       */
+/*   Updated: 2021/11/15 16:57:44 by jobject          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,16 +30,16 @@ static void	delete_structure(char	**strs)
 
 void	error_cmd(char	*message, t_cmd	**cmds)
 {
-	if ((*(*cmds)->cmd))
+	if (((*cmds)->cmd))
 		delete_structure((*cmds)->cmd);
-	if ((*(*cmds)->mypaths))
+	if (((*cmds)->mypaths))
 		delete_structure((*cmds)->mypaths);
 	if ((*cmds)->cmd_path)
 		free((*cmds)->cmd_path);
 	error_message(message);
 }
 
-int	read_write(char	*filename, char	solution, t_cmd	*cmds)
+int	read_write(char	*filename, char solution, t_cmd	*cmds)
 {
 	int	fd;
 
@@ -49,9 +49,15 @@ int	read_write(char	*filename, char	solution, t_cmd	*cmds)
 		if (fd < 0)
 			error_cmd("ERROR: Unable to open infile.", &cmds);
 	}
-	else
+	else if (solution == 'w')
 	{
 		fd = open(filename, O_WRONLY | O_TRUNC | O_CREAT, 0777);
+		if (fd < 0)
+			error_cmd("ERROR: Unable to open outfile.", &cmds);
+	}
+	else
+	{
+		fd = open(filename, O_WRONLY | O_APPEND | O_CREAT, 0777);
 		if (fd < 0)
 			error_cmd("ERROR: Unable to open outfile.", &cmds);
 	}

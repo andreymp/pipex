@@ -6,7 +6,7 @@
 /*   By: jobject <jobject@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 20:40:47 by jobject           #+#    #+#             */
-/*   Updated: 2021/11/12 20:50:54 by jobject          ###   ########.fr       */
+/*   Updated: 2021/11/15 13:09:02 by jobject          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	init_env(char	**envp, t_cmd	*cmds)
 		cmds->mypaths = ft_split(envp[i] + 5, ':');
 }
 
-void	init_cmd(char	**envp, char	*argv, t_cmd	*cmds)
+void	init_cmd(char	*argv, t_cmd	*cmds)
 {
 	cmds->cmd = ft_split(argv, ' ');
 	init_cmd_path(&cmds);
