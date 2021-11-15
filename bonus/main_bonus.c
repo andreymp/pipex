@@ -6,7 +6,7 @@
 /*   By: jobject <jobject@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 19:47:38 by jobject           #+#    #+#             */
-/*   Updated: 2021/11/15 17:49:31 by jobject          ###   ########.fr       */
+/*   Updated: 2021/11/15 20:05:51 by jobject          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	here_doc(char	*filename, char	*lim)
 	close(fd);
 }
 
-static void	wait_func(int argc, int count)
+void	wait_func(int argc, int count)
 {
 	int	i;
 
@@ -63,6 +63,16 @@ int	choice(t_proccess *proc, t_cmd	*cmds, char	**argv, int argc)
 	return (i);
 }
 
+void	del(t_cmd	*cmds, int i)
+{
+	if (cmds->cmd)
+		delete_structure(cmds->cmd);
+	if (cmds->mypaths && i)
+		delete_structure(cmds->mypaths);
+	if (cmds->cmd_path)
+		free(cmds->cmd_path);
+}
+
 int	main(int argc, char	**argv,	char	**envp)
 {
 	t_cmd		cmds;
@@ -71,6 +81,7 @@ int	main(int argc, char	**argv,	char	**envp)
 
 	if (argc < 5)
 		error_message("ERROR: Wrong structure.");
+	check(argv, argc);
 	init_env(envp, &cmds);
 	i = choice(&proc, &cmds, argv, argc);
 	dup2(proc.fd1, STDIN_FILENO);
@@ -78,15 +89,14 @@ int	main(int argc, char	**argv,	char	**envp)
 	{
 		init_cmd(argv[i++], &cmds);
 		pipex(&cmds, envp, &proc);
+		del(&cmds, 0);
 	}
 	close(proc.fd1);
 	dup2(proc.fd2, STDOUT_FILENO);
 	init_cmd(argv[i], &cmds);
 	execve(cmds.cmd_path, cmds.cmd, envp);
-	if (ft_strncmp(argv[1], "here_doc", ft_strlen("here_doc")))
-		wait_func(argc, 3);
-	else
-		wait_func(argc, 4);
+	del(&cmds, 1);
+	total_wait(argv, argc);
 	close(proc.fd2);
 	return (0);
 }

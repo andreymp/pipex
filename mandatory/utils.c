@@ -6,7 +6,7 @@
 /*   By: jobject <jobject@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 19:27:06 by jobject           #+#    #+#             */
-/*   Updated: 2021/11/12 21:08:46 by jobject          ###   ########.fr       */
+/*   Updated: 2021/11/15 18:50:17 by jobject          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,15 @@ static void	delete_structure(char	**strs)
 	while (strs[i])
 		free(strs[i++]);
 	free(strs);
+}
+
+void	del(t_cmd	*cmds)
+{
+	delete_structure(cmds->cmd1);
+	delete_structure(cmds->cmd2);
+	delete_structure(cmds->mypaths);
+	free(cmds->cmd1_path);
+	free(cmds->cmd2_path);
 }
 
 void	error_cmd(char	*message, t_cmd	**cmds)

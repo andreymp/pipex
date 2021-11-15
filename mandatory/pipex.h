@@ -6,7 +6,7 @@
 /*   By: jobject <jobject@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 19:27:23 by jobject           #+#    #+#             */
-/*   Updated: 2021/11/12 20:39:50 by jobject          ###   ########.fr       */
+/*   Updated: 2021/11/15 20:00:41 by jobject          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ void	error_cmd(char	*message, t_cmd	**cmds);
 char	*double_join(char	*s1, char	*s2);
 void	init_cmd(char	**envp, char	**argv, t_cmd	*cmds);
 void	pipex(t_cmd	*cmds, t_proccess	*proc, char	**envp, char	**argv);
-void	free_mem(t_cmd	*cmds);
+void	del(t_cmd	*cmds);
 void	init_cmd_path(t_cmd	**cmds);
+void	check(char	**argv);
 
 #endif

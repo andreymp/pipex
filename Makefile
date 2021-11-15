@@ -1,7 +1,7 @@
 NAME =	pipex
 
 CC =	gcc
-CFLAGS =	-g -Wall -Wextra -Werror -MMD -fsanitize=address
+CFLAGS =	-g -Wall -Wextra -Werror -MMD
 
 RM =	rm -rf
 
@@ -20,7 +20,7 @@ SRC_B =	bonus/init_bonus.c	\
 INC = 	-I libft/libft.h 	\
 		-I mandatory/pipex.h	\
 		-I bonus/pipex_bonus.h \
-		-I bonus/get_next_line.h
+		-I bonus/get_next_line.h \
 
 OBJS =	$(SRC:.c=.o)
 DEP =	$(SRC:.c=.d)

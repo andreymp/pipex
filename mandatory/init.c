@@ -6,7 +6,7 @@
 /*   By: jobject <jobject@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 19:27:32 by jobject           #+#    #+#             */
-/*   Updated: 2021/11/12 19:27:33 by jobject          ###   ########.fr       */
+/*   Updated: 2021/11/15 20:00:25 by jobject          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,18 @@ void	init_cmd_path(t_cmd	**cmds)
 		(*cmds)->cmd2_path = NULL;
 		i++;
 	}
+}
+
+void	check(char	**argv)
+{
+	while (*argv[2] && *argv[2] == ' ')
+		argv[2]++;
+	if (!*argv[2])
+		error_message("ERROR: cmd1 doesn't exist");
+	while (*argv[3] && *argv[2] == ' ')
+		argv[3]++;
+	if (!*argv[3])
+		error_message("ERROR: cmd2 doesn't exist");
 }
 
 void	init_cmd(char	**envp, char	**argv, t_cmd	*cmds)

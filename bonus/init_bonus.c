@@ -6,11 +6,26 @@
 /*   By: jobject <jobject@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 20:40:47 by jobject           #+#    #+#             */
-/*   Updated: 2021/11/15 13:09:02 by jobject          ###   ########.fr       */
+/*   Updated: 2021/11/15 20:05:16 by jobject          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
+
+void	check(char	**argv, int argc)
+{
+	int	i;
+
+	i = 2;
+	while (i < argc - 2)
+	{
+		while (*argv[2] && *argv[2] == ' ')
+			argv[2]++;
+		if (!*argv[2])
+			error_message("ERROR: cmd doesn't exist");
+		i++;
+	}
+}
 
 static void	init_cmd_path(t_cmd	**cmds)
 {

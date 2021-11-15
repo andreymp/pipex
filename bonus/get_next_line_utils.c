@@ -6,11 +6,12 @@
 /*   By: jobject <jobject@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 16:56:06 by jobject           #+#    #+#             */
-/*   Updated: 2021/11/15 16:48:35 by jobject          ###   ########.fr       */
+/*   Updated: 2021/11/15 19:30:02 by jobject          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include "pipex_bonus.h"
 
 size_t	ft_strlengnl(const char	*str)
 {
@@ -78,4 +79,12 @@ char	*ft_strjoingnl(char	*s1, char const	*s2)
 	}
 	free((char *) s1);
 	return (str);
+}
+
+void	total_wait(char	**argv, int argc)
+{
+	if (ft_strncmp(argv[1], "here_doc", ft_strlen("here_doc")))
+		wait_func(argc, 3);
+	else
+		wait_func(argc, 4);
 }
